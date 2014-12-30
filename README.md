@@ -1,7 +1,9 @@
 # Cleverbot
 
-A simple Cleverbot API implmentation in Elixir that supports `think`
+A simple [Cleverbot] API implmentation in Elixir that supports `think`
 converstations.
+
+[Cleverbot]: http://www.cleverbot.com/
 
 ## Usage
 
