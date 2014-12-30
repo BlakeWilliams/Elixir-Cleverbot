@@ -11,7 +11,7 @@ Add Cleverbot to your `mix.exs` dependencies.
 
 ```elixir
 def deps do
-  [{:cleverbot, git: "https://github.com/BlakeWilliams/Elixir-Cleverbot"}]
+  [{:cleverbot, "~> 0.0.1"}]
 end
 ```
 
