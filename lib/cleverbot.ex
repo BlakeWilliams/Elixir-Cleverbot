@@ -17,7 +17,7 @@ defmodule Cleverbot do
   """
 
   use GenServer
-  @url "http://www.cleverbot.com/webservicemin"
+  @url "http://www.cleverbot.com/webservicemin?uc=165&"
 
   @doc """
   Starts a Cleverbot process. You can pass in an existing `Cleverbot.Session`
@@ -66,16 +66,22 @@ defmodule Cleverbot do
 
   defp think_about_it(message, session, http) do
     form_data = build_query(message, session)
-    {:ok, response} = http.post(@url, form_data, headers)
+    {:ok, response} = http.post(@url, {:form, form_data}, headers)
 
     Cleverbot.Response.parse(response.body)
   end
 
   defp headers do
     %{
-      "Cache-Control" => "no-cache, no-cache",
-      "Pragma" => "no-cache",
-      "Referer" => "http://www.cleverbot.com"
+        "User-Agent" => "Mozilla/4.0 (compatible; MSIE 8.0; Windows NT 6.0)",
+        "Accept" => "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Charset" => "ISO-8859-1,utf-8;q=0.7,*;q=0.7",
+        "Accept-Language" => "en-us,en;q=0.8,en-us;q=0.5,en;q=0.3",
+        "Cache-Control" => "no-cache",
+        "Cookie" => "XVIS=TEI939AFFIAGAYQZ",
+        "Host" => "www.cleverbot.com",
+        "Referer" => "http://www.cleverbot.com/",
+        "Pragma" => "no-cache"
     }
   end
 
@@ -85,14 +91,20 @@ defmodule Cleverbot do
                   |> String.slice(9..34)
                   |> md5
 
-    List.insert_at(initial_data, 11, {:icognocheck, icognocheck})
-    initial_data ++ [icognocheck: icognocheck] |> URI.encode_query
+    Keyword.put(initial_data, :icognocheck, icognocheck)
   end
 
   defp build_form_map(message, session) do
+    # taken from https://github.com/folz/cleverbot.py
     [
       stimulus: URI.encode(message),
-      start: "y",
+      cb_settings_language: "",
+      cb_settings_scripting: "no",
+      islearning: 1,  # Never modified
+      icognoid: "wsf",  # Never modified
+      icognocheck: "",
+      
+      start: "y",   # Never modified
       sessionid: session.session_id,
       vText8: Enum.at(session.history, 6),
       vText7: Enum.at(session.history, 5),
@@ -101,11 +113,16 @@ defmodule Cleverbot do
       vText4: Enum.at(session.history, 2),
       vText3: Enum.at(session.history, 1),
       vText2: Enum.at(session.history, 0),
-      icognoid: "wsf",
-      fno: 0,
-      sub: "Say",
-      islearning: 1,
-      cleanslate: false,
+      fno: 0,   # Never modified
+      prevref: "",
+      emotionaloutput: "",  # Never modified
+      emotionalhistory: "",  # Never modified
+      asbotname: "",  # Never modified
+      ttsvoice: "",  # Never modified 
+      typing: "",  # Never modified
+      lineref: "",
+      sub: "Say",  # Never modified
+      cleanslate: "false"  # Never modified
     ]
   end
 

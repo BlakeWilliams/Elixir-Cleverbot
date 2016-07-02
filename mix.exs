@@ -3,8 +3,8 @@ defmodule Cleverbot.Mixfile do
 
   def project do
     [app: :cleverbot,
-     version: "0.0.1",
-     elixir: "~> 1.0",
+     version: "0.0.2",
+     elixir: "~> 1.2.0",
      deps: deps,
      source_url: "https://github.com/BlakeWilliams/Elixir-Cleverbot",
      description: "A Cleverbot API wrapper.",
@@ -16,7 +16,7 @@ defmodule Cleverbot.Mixfile do
   end
 
   defp deps do
-    [{:httpoison, "~> 0.5.0"},
+    [{:httpoison, "~> 0.6.0"},
      {:earmark, "~> 0.1", only: :dev},
      {:ex_doc, "~> 0.6", only: :dev}]
   end
