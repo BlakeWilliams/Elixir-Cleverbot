@@ -3,7 +3,7 @@ defmodule Cleverbot.Session do
   A struct that holds the state of a cleverbot session consisting of
   `session_id` and `history`.
   """
-  defstruct session_id: "", history: ["", "", "", "", "", "", ""]
+  defstruct session_id: "", history: []
   @type session :: %__MODULE__{session_id: binary | nil, history: [] | [binary]}
 
   @doc """

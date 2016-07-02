@@ -97,7 +97,7 @@ defmodule Cleverbot do
   defp build_form_map(message, session) do
     # taken from https://github.com/folz/cleverbot.py
     [
-      stimulus: URI.encode(message),
+      stimulus: URI.encode(message, &URI.char_unreserved?/1),
       cb_settings_language: "",
       cb_settings_scripting: "no",
       islearning: 1,  # Never modified
